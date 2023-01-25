@@ -3,7 +3,7 @@ import { Server } from "socket.io";
 import bodyParser from "body-parser";
 import cors from "cors";
 import * as http from "http";
-
+import userRoute from './routes/user.js'
 const app= express();
 const server = http.createServer(app);
 const port = 3000;
@@ -25,8 +25,9 @@ const io = new Server(server, {
 server.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 })
-
+app.use("/api/user", userRoute)
 io.on("connection", (socket) => {
     console.log(socket.id);
     socket.emit("hello", "world!");
 })
+
