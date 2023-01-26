@@ -1,0 +1,113 @@
+const socket = io("http://localhost:3000");
+
+const colorInputs = document.querySelectorAll('.color-input');
+const widthInputs = document.querySelectorAll('.width-input');
+const undoButton = document.querySelector('.undo-button');
+const redoButton = document.querySelector('.redo-button');
+const canvas = document.querySelector('canvas');
+const context = canvas.getContext("2d");
+
+let history = [];
+let historySave;
+let lastStroke = {};
+
+let isDrawing = false;
+let strokeStyle = colorInputs[0].value;
+let strokeWidth = parseInt(widthInputs[0].value);
+let previousX;
+let previousY;
+
+colorInputs.forEach(colorInput => {
+    colorInput.addEventListener('click', () => {
+        strokeStyle = colorInput.value;
+    })
+})
+
+widthInputs.forEach(widthInput => {
+    widthInput.addEventListener('click', () => {
+        strokeWidth = widthInput.value === "fill" ? widthInput.value:+widthInput.value;
+    })
+})
+
+undoButton.addEventListener('click', () => {
+    context.clearRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
+    history.pop();
+    history.forEach(stroke => {
+        if (stroke.strokeWidth === "fill") {
+            context.fillStyle = stroke.strokeStyle;
+            context.fillRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
+        } else {
+            stroke.moves.forEach((move, index) => {
+                drawLine(stroke.strokeStyle, stroke.strokeWidth, move.xPosition, move.yPosition, index-1 in stroke.moves ? stroke.moves[index-1].xPosition : move.xPosition, index-1 in stroke.moves ? stroke.moves[index-1].yPosition : move.yPosition);
+            })
+        }
+    })
+})
+
+redoButton.addEventListener('click', () => {
+    context.clearRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
+    for (let i = 0; i <= history.length; i++) {
+        if (historySave[i].strokeWidth === "fill") {
+            context.fillStyle = historySave[i].strokeStyle;
+            context.fillRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
+        } else {
+            historySave[i].moves.forEach((move, index) => {
+                drawLine(historySave[i].strokeStyle, historySave[i].strokeWidth, move.xPosition, move.yPosition, index - 1 in historySave[i].moves ? historySave[i].moves[index - 1].xPosition : move.xPosition, index - 1 in historySave[i].moves ? historySave[i].moves[index - 1].yPosition : move.yPosition);
+            })
+        }
+    }
+    history[history.length] = historySave[history.length];
+})
+
+canvas.addEventListener('mousedown', () => {
+    isDrawing = true;
+    if (strokeWidth === "fill") {
+        context.fillStyle = strokeStyle;
+        context.fillRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
+    }
+    lastStroke = {
+        strokeStyle:  strokeStyle,
+        strokeWidth: strokeWidth,
+        moves: []
+    }
+})
+
+document.addEventListener('mouseup', endStroke);
+canvas.addEventListener('mouseleave', endStroke);
+
+canvas.addEventListener('mousemove', (event) => {
+    if (isDrawing && strokeWidth !== "fill") {
+        let xPosition = event.clientX - canvas.offsetLeft;
+        let yPosition = event.clientY - canvas.offsetTop;
+        previousX ??= xPosition;
+        previousY ??= yPosition;
+        drawLine(strokeStyle, strokeWidth, xPosition, yPosition, previousX, previousY);
+        lastStroke.moves.push({
+            xPosition: xPosition,
+            yPosition: yPosition
+        })
+        previousX = xPosition;
+        previousY = yPosition;
+    }
+})
+
+function drawLine(strokeStyle, strokeWidth, xPosition, yPosition, previousX, previousY) {
+    context.beginPath();
+    context.lineCap = "round";
+    context.strokeStyle = strokeStyle;
+    context.lineWidth = strokeWidth;
+    context.moveTo(previousX, previousY);
+    context.lineTo(xPosition, yPosition);
+    context.stroke();
+    context.closePath();
+}
+
+function endStroke() {
+    if (isDrawing) {
+        history.push(lastStroke);
+        historySave = history.slice();
+    }
+    isDrawing = false;
+    previousX = null;
+    previousY = null;
+}

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Draw</title>
+</head>
+<body>
+
+<h3 class="text-xl font-semibold">Un cheval</h3>
+<canvas class="border-2" height="600" width="1000"></canvas>
+
+<div class="color-select">
+    <input type="radio" name="color" id="black" value="black" class="color-input" checked>
+    <label for="black">Black</label>
+    <input type="radio" name="color" id="red" value="red" class="color-input">
+    <label for="red">Red</label>
+    <input type="radio" name="color" id="orange" value="orange" class="color-input">
+    <label for="orange">Orange</label>
+    <input type="radio" name="color" id="yellow" value="yellow" class="color-input">
+    <label for="yellow">Yellow</label>
+</div>
+
+<div class="width-select">
+    <input type="radio" name="width" id="xs" value="3" class="width-input" checked>
+    <label for="xs">XS</label>
+    <input type="radio" name="width" id="s" value="6" class="width-input">
+    <label for="s">S</label>
+    <input type="radio" name="width" id="m" value="9" class="width-input">
+    <label for="m">M</label>
+    <input type="radio" name="width" id="l" value="12" class="width-input">
+    <label for="l">L</label>
+    <input type="radio" name="width" id="xl" value="15" class="width-input">
+    <label for="xl">XL</label>
+    <input type="radio" name="width" id="fill" value="fill" class="width-input">
+    <label for="fill">Fill</label>
+</div>
+
+<div>
+    <button class="undo-button">Undo</button>
+    <button class="redo-button">Redo</button>
+</div>
+
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script src="./js/drawing.js"></script>
+
+</body>
+</html>
