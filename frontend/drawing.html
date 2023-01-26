@@ -8,42 +8,60 @@
     <link rel="stylesheet" href="./css/style.css">
     <title>Draw</title>
 </head>
-<body>
+<body class="h-screen p-12 flex justify-between items-center">
 
-<h3 class="text-xl font-semibold">Un cheval</h3>
-<canvas class="border-2" height="600" width="1000"></canvas>
+<div class="flex flex-col gap-4">
+    <div class="h-min color-select grid grid-cols-4 gap-2">
+        <input type="radio" name="color" id="black" value="black" class="peer/black color-input hidden" checked>
+        <label for="black" class="color-input__label flex h-12 w-12 justify-center items-center bg-black rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/black:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <input type="radio" name="color" id="white" value="white" class="peer/white color-input hidden">
+        <label for="white" class="color-input__label flex h-12 w-12 justify-center items-center bg-white rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/white:text-black/30 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <input type="radio" name="color" id="red" value="red" class="peer/red color-input hidden">
+        <label for="red" class="color-input__label flex h-12 w-12 justify-center items-center bg-red-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/red:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <input type="radio" name="color" id="orange" value="orange" class="peer/orange color-input hidden">
+        <label for="orange" class="color-input__label flex h-12 w-12 justify-center items-center bg-orange-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/orange:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <input type="radio" name="color" id="yellow" value="yellow" class="peer/yellow color-input hidden">
+        <label for="yellow" class="color-input__label flex h-12 w-12 justify-center items-center bg-yellow-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/yellow:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <input type="radio" name="color" id="green" value="green" class="peer/green color-input hidden">
+        <label for="green" class="color-input__label flex h-12 w-12 justify-center items-center bg-green-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/green:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <input type="radio" name="color" id="blue" value="blue" class="peer/blue color-input hidden">
+        <label for="blue" class="color-input__label flex h-12 w-12 justify-center items-center bg-blue-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/blue:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <input type="radio" name="color" id="purple" value="purple" class="peer/purple color-input hidden">
+        <label for="purple" class="color-input__label flex h-12 w-12 justify-center items-center bg-purple-500 rounded-md border-2 border-black/30 text-transparent text-3xl   peer-checked/purple:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <input type="color" name="color" id="color-picker" value="#000000" class="relative w-full h-12 col-start-1 col-end-5 row-start-3 invisible">
+        <label for="color-picker" class="color-picker__label flex h-12 col-start-1 col-end-5 row-start-3 justify-center items-center bg-black rounded-md border-2 border-black/30 text-transparent text-3xl cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+    </div>
 
-<div class="color-select">
-    <input type="radio" name="color" id="black" value="black" class="color-input" checked>
-    <label for="black">Black</label>
-    <input type="radio" name="color" id="red" value="red" class="color-input">
-    <label for="red">Red</label>
-    <input type="radio" name="color" id="orange" value="orange" class="color-input">
-    <label for="orange">Orange</label>
-    <input type="radio" name="color" id="yellow" value="yellow" class="color-input">
-    <label for="yellow">Yellow</label>
+    <div>
+        <div class="width-select">
+            <input type="radio" name="width" id="xs" value="3" class="width-input hidden" checked>
+            <label for="xs">XS</label>
+            <input type="radio" name="width" id="s" value="6" class="width-input hidden">
+            <label for="s">S</label>
+            <input type="radio" name="width" id="m" value="9" class="width-input hidden">
+            <label for="m">M</label>
+            <input type="radio" name="width" id="l" value="12" class="width-input hidden">
+            <label for="l">L</label>
+            <input type="radio" name="width" id="xl" value="15" class="width-input hidden">
+            <label for="xl">XL</label>
+            <input type="radio" name="width" id="fill" value="fill" class="width-input hidden">
+            <label for="fill">Fill</label>
+        </div>
+
+        <div>
+            <button class="undo-button">Undo</button>
+            <button class="redo-button">Redo</button>
+        </div>
+    </div>
 </div>
 
-<div class="width-select">
-    <input type="radio" name="width" id="xs" value="3" class="width-input" checked>
-    <label for="xs">XS</label>
-    <input type="radio" name="width" id="s" value="6" class="width-input">
-    <label for="s">S</label>
-    <input type="radio" name="width" id="m" value="9" class="width-input">
-    <label for="m">M</label>
-    <input type="radio" name="width" id="l" value="12" class="width-input">
-    <label for="l">L</label>
-    <input type="radio" name="width" id="xl" value="15" class="width-input">
-    <label for="xl">XL</label>
-    <input type="radio" name="width" id="fill" value="fill" class="width-input">
-    <label for="fill">Fill</label>
+<div class="w-fit">
+    <h3 class="w-fit text-xl font-semibold">Dessine : <span class="drawing-description">Un cheval qui danse sur la Lune</span></h3>
+    <canvas class="border-2" height="720" width="1080"></canvas>
 </div>
 
-<div>
-    <button class="undo-button">Undo</button>
-    <button class="redo-button">Redo</button>
-</div>
-
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <script src="http://localhost:3000/socket.io/socket.io.js"></script>
 <script src="./js/drawing.js"></script>
 
