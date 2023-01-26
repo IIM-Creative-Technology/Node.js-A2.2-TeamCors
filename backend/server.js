@@ -29,5 +29,9 @@ app.use("/api/user", userRoute)
 io.on("connection", (socket) => {
     console.log(socket.id);
     socket.emit("hello", "world!");
+    socket.on("validate", (user) => {
+        console.log(`User ${user.id} validated`);
+        console.table(user.strokes);
+    })
 })
 

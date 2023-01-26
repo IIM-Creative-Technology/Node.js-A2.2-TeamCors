@@ -7,6 +7,8 @@ const colorPickerLabel = document.querySelector('.color-picker__label');
 const widthInputs = document.querySelectorAll('.width-input');
 const undoButton = document.querySelector('.undo-button');
 const redoButton = document.querySelector('.redo-button');
+const clearButton = document.querySelector('.clear-button');
+const validateButton = document.querySelector('.validate-button');
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext("2d");
 
@@ -55,20 +57,41 @@ undoButton.addEventListener('click', () => {
 })
 
 redoButton.addEventListener('click', () => {
-    context.clearRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
-    for (let i = 0; i <= history.length; i++) {
-        if (historySave[i].strokeWidth === "fill") {
-            context.fillStyle = historySave[i].strokeStyle;
-            context.fillRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
-        } else {
-            historySave[i].moves.forEach((move, index) => {
-                context.beginPath();
-                drawLine(historySave[i].strokeStyle, historySave[i].strokeWidth, move.xPosition, move.yPosition, index - 1 in historySave[i].moves ? historySave[i].moves[index - 1].xPosition : move.xPosition, index - 1 in historySave[i].moves ? historySave[i].moves[index - 1].yPosition : move.yPosition);
-                context.closePath();
-            })
+    if (history.length < historySave.length) {
+        context.clearRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
+        for (let i = 0; i <= history.length; i++) {
+            if (historySave[i].strokeWidth === "fill") {
+                context.fillStyle = historySave[i].strokeStyle;
+                context.fillRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
+            } else {
+                historySave[i].moves.forEach((move, index) => {
+                    context.beginPath();
+                    drawLine(historySave[i].strokeStyle, historySave[i].strokeWidth, move.xPosition, move.yPosition, index - 1 in historySave[i].moves ? historySave[i].moves[index - 1].xPosition : move.xPosition, index - 1 in historySave[i].moves ? historySave[i].moves[index - 1].yPosition : move.yPosition);
+                    context.closePath();
+                })
+            }
         }
+        history[history.length] = historySave[history.length];
     }
-    history[history.length] = historySave[history.length];
+})
+
+clearButton.addEventListener('click', () => {
+    context.clearRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
+    history.push({
+        strokeStyle:  "#ffffff",
+        strokeWidth: "fill",
+        moves: []
+    });
+    historySave = history.slice();
+})
+
+validateButton.addEventListener('click', () => {
+    socket.emit("validate", {
+        id: 18,
+        name: 'John',
+        surname: 'Doe',
+        strokes: history
+    });
 })
 
 canvas.addEventListener('mousedown', () => {

@@ -8,55 +8,99 @@
     <link rel="stylesheet" href="./css/style.css">
     <title>Draw</title>
 </head>
-<body class="h-screen p-12 flex justify-between items-center">
+<body class="h-screen flex justify-evenly items-center">
 
-<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-12">
+    <div class="flex gap-2">
+        <button class="undo-button flex justify-center w-full text-3xl bg-black/10 p-2 rounded-md border-2 border-black/10 text-black/70"><ion-icon name="arrow-undo"></ion-icon></button>
+        <button class="redo-button flex justify-center w-full text-3xl bg-black/10 p-2 rounded-md border-2 border-black/10 text-black/70"><ion-icon name="arrow-redo"></ion-icon></button>
+        <button class="clear-button flex justify-center w-full text-3xl bg-black/10 p-2 rounded-md border-2 border-black/10 text-black/70"><ion-icon name="trash"></ion-icon></button>
+    </div>
+
     <div class="h-min color-select grid grid-cols-4 gap-2">
         <input type="radio" name="color" id="black" value="black" class="peer/black color-input hidden" checked>
-        <label for="black" class="color-input__label flex h-12 w-12 justify-center items-center bg-black rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/black:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <label for="black"
+               class="color-input__label flex h-12 w-12 justify-center items-center bg-black rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/black:text-white/80 cursor-pointer">
+            <ion-icon name="checkbox"></ion-icon>
+        </label>
         <input type="radio" name="color" id="white" value="white" class="peer/white color-input hidden">
-        <label for="white" class="color-input__label flex h-12 w-12 justify-center items-center bg-white rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/white:text-black/30 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <label for="white"
+               class="color-input__label flex h-12 w-12 justify-center items-center bg-white rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/white:text-black/30 cursor-pointer">
+            <ion-icon name="checkbox"></ion-icon>
+        </label>
         <input type="radio" name="color" id="red" value="red" class="peer/red color-input hidden">
-        <label for="red" class="color-input__label flex h-12 w-12 justify-center items-center bg-red-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/red:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <label for="red"
+               class="color-input__label flex h-12 w-12 justify-center items-center bg-red-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/red:text-white/80 cursor-pointer">
+            <ion-icon name="checkbox"></ion-icon>
+        </label>
         <input type="radio" name="color" id="orange" value="orange" class="peer/orange color-input hidden">
-        <label for="orange" class="color-input__label flex h-12 w-12 justify-center items-center bg-orange-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/orange:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <label for="orange"
+               class="color-input__label flex h-12 w-12 justify-center items-center bg-orange-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/orange:text-white/80 cursor-pointer">
+            <ion-icon name="checkbox"></ion-icon>
+        </label>
         <input type="radio" name="color" id="yellow" value="yellow" class="peer/yellow color-input hidden">
-        <label for="yellow" class="color-input__label flex h-12 w-12 justify-center items-center bg-yellow-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/yellow:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <label for="yellow"
+               class="color-input__label flex h-12 w-12 justify-center items-center bg-yellow-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/yellow:text-white/80 cursor-pointer">
+            <ion-icon name="checkbox"></ion-icon>
+        </label>
         <input type="radio" name="color" id="green" value="green" class="peer/green color-input hidden">
-        <label for="green" class="color-input__label flex h-12 w-12 justify-center items-center bg-green-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/green:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <label for="green"
+               class="color-input__label flex h-12 w-12 justify-center items-center bg-green-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/green:text-white/80 cursor-pointer">
+            <ion-icon name="checkbox"></ion-icon>
+        </label>
         <input type="radio" name="color" id="blue" value="blue" class="peer/blue color-input hidden">
-        <label for="blue" class="color-input__label flex h-12 w-12 justify-center items-center bg-blue-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/blue:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <label for="blue"
+               class="color-input__label flex h-12 w-12 justify-center items-center bg-blue-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/blue:text-white/80 cursor-pointer">
+            <ion-icon name="checkbox"></ion-icon>
+        </label>
         <input type="radio" name="color" id="purple" value="purple" class="peer/purple color-input hidden">
-        <label for="purple" class="color-input__label flex h-12 w-12 justify-center items-center bg-purple-500 rounded-md border-2 border-black/30 text-transparent text-3xl   peer-checked/purple:text-white/80 cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
-        <input type="color" name="color" id="color-picker" value="#000000" class="relative w-full h-12 col-start-1 col-end-5 row-start-3 invisible">
-        <label for="color-picker" class="color-picker__label flex h-12 col-start-1 col-end-5 row-start-3 justify-center items-center bg-black rounded-md border-2 border-black/30 text-transparent text-3xl cursor-pointer"><ion-icon name="checkbox"></ion-icon></label>
+        <label for="purple"
+               class="color-input__label flex h-12 w-12 justify-center items-center bg-purple-500 rounded-md border-2 border-black/30 text-transparent text-3xl peer-checked/purple:text-white/80 cursor-pointer">
+            <ion-icon name="checkbox"></ion-icon>
+        </label>
+        <input type="color" name="color" id="color-picker" value="#000000"
+               class="relative w-full h-12 col-start-1 col-end-5 row-start-3 invisible">
+        <label for="color-picker"
+               class="color-picker__label flex h-12 col-start-1 col-end-5 row-start-3 justify-center items-center bg-black rounded-md border-2 border-black/30 text-transparent text-3xl cursor-pointer">
+            <ion-icon name="checkbox"></ion-icon>
+        </label>
     </div>
 
-    <div>
-        <div class="width-select">
-            <input type="radio" name="width" id="xs" value="3" class="width-input hidden" checked>
-            <label for="xs">XS</label>
-            <input type="radio" name="width" id="s" value="6" class="width-input hidden">
-            <label for="s">S</label>
-            <input type="radio" name="width" id="m" value="9" class="width-input hidden">
-            <label for="m">M</label>
-            <input type="radio" name="width" id="l" value="12" class="width-input hidden">
-            <label for="l">L</label>
-            <input type="radio" name="width" id="xl" value="15" class="width-input hidden">
-            <label for="xl">XL</label>
-            <input type="radio" name="width" id="fill" value="fill" class="width-input hidden">
-            <label for="fill">Fill</label>
-        </div>
-
-        <div>
-            <button class="undo-button">Undo</button>
-            <button class="redo-button">Redo</button>
-        </div>
+    <div class="width-select flex justify-between items-center">
+        <label for="xs" class="flex justify-center items-center h-4 w-4 bg-gray-100 border-2 border-black/30 rounded-full cursor-pointer">
+            <input type="radio" name="width" id="xs" value="3" class="peer width-input hidden" checked>
+            <div class="invisible peer-checked:visible h-full w-full border-2 gray-100 bg-black/40 rounded-full cursor-pointer"></div>
+        </label>
+        <label for="s" class="flex justify-center items-center h-5 w-5 bg-gray-100 border-2 border-black/30 rounded-full cursor-pointer">
+            <input type="radio" name="width" id="s" value="6" class="peer width-input hidden">
+            <div class="invisible peer-checked:visible h-full w-full border-2 gray-100 bg-black/40 rounded-full cursor-pointer"></div>
+        </label>
+        <label for="m" class="flex justify-center items-center h-6 w-6 bg-gray-100 border-2 border-black/30 rounded-full cursor-pointer">
+            <input type="radio" name="width" id="m" value="9" class="peer width-input hidden">
+            <div class="invisible peer-checked:visible h-full w-full border-2 gray-100 bg-black/40 rounded-full cursor-pointer"></div>
+        </label>
+        <label for="l" class="flex justify-center items-center h-7 w-7 bg-gray-100 border-2 border-black/30 rounded-full cursor-pointer">
+            <input type="radio" name="width" id="l" value="12" class="peer width-input hidden">
+            <div class="invisible peer-checked:visible h-full w-full border-2 gray-100 bg-black/40 rounded-full cursor-pointer"></div>
+        </label>
+        <label for="xl" class="flex justify-center items-center h-8 w-8 bg-gray-100 border-2 border-black/30 rounded-full cursor-pointer">
+            <input type="radio" name="width" id="xl" value="15" class="peer width-input hidden">
+            <div class="invisible peer-checked:visible h-full w-full border-2 gray-100 bg-black/40 rounded-full cursor-pointer"></div>
+        </label>
+        <label for="fill" class="flex scale-x-[-1] text-black/40 text-3xl cursor-pointer">
+            <input type="radio" name="width" id="fill" value="fill" class="peer width-input hidden">
+            <ion-icon name="color-fill-outline" class="peer-checked:hidden"></ion-icon>
+            <ion-icon name="color-fill" class="hidden peer-checked:inline"></ion-icon>
+        </label>
     </div>
+
+    <button class="validate-button bg-green-500 h-12 rounded-md text-white font-semibold text-xl border-2 border-black/30">Terminer</button>
 </div>
 
 <div class="w-fit">
-    <h3 class="w-fit text-xl font-semibold">Dessine : <span class="drawing-description">Un cheval qui danse sur la Lune</span></h3>
+    <h3 class="w-full py-12 text-center text-3xl font-normal">Dessine :
+        <span class="drawing-description text-black font-bold">Un cheval qui danse sur la Lune</span>
+    </h3>
     <canvas class="border-2" height="720" width="1080"></canvas>
 </div>
 
