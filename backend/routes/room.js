@@ -21,6 +21,10 @@ router.post("/create", async (req,res) => {
         const link = `/rooms/${room._id}`;
         // Send the link to the client
         res.json({ link });
+
+        //socket.emit("newRoom", { link });
+
+
     } catch (error) {
         res.status(500).json({ error });
     }

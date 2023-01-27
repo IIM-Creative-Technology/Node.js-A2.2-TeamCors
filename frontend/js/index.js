@@ -19,10 +19,13 @@ form.addEventListener('submit', async (e) => {
     });
     // Handle the response from the server
     if (response.ok) {
+        alert("Yeah,you create a room")
         const { link } = await response.json();
+
         // Redirect the user to the room link
         window.location.href = link;
     } else {
         alert('Failed to create room');
     }
 });
+
