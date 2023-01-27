@@ -8,7 +8,7 @@ router.get("/", (req,res) => {
         lastName: "Gautier",
         email: "fanny@mail.com"
     })
-})
+});
 
 router.post("/", (req,res) => {
     res.send('Post a new user')
