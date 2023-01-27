@@ -10,6 +10,8 @@ const app = express();
 const server = http.createServer(app);
 const port = 3000;
 
+let method;
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
@@ -32,13 +34,21 @@ app.use("/api/drawing", drawingRoute)
 io.on("connection", (socket) => {
     console.log(socket.id);
     socket.emit("hello", "world!");
-    socket.on("validateDrawing", (drawing) => {
-        fetch('http://localhost:3000/api/drawing', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(drawing)
-        })
+    socket.on("validateDrawing", (doc) => {
+        console.log(doc);
+        fetch(`http://localhost:3000/api/drawing?roomId=${doc.roomId}&round=${doc.round}&username=${doc.username}`)
+        .then(response => response.json())
+        .then(data => {
+            method = data === null ? 'POST':'PUT';
+            fetch(`http://localhost:3000/api/drawing?roomId=${doc.roomId}&round=${doc.round}&username=${doc.username}`, {
+                method,
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(doc)
+            })
+            .then(response => response.json())
+            .then(data => console.log(data));
+        });
     })
 })
