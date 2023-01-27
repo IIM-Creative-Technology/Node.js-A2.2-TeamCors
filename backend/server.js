@@ -37,6 +37,18 @@ io.on("connection", (socket) => {
         /* + SEND THE MESSAGE TO THE DATABASE (MESSAGE TABLE WITH USER ID */
     });
 
+    socket.on('is typing',()=>{
+        console.log('user is typing')
+        socket.broadcast.emit('is typing')
+
+    })
+
+    socket.on('is not typing',()=>{
+
+        socket.broadcast.emit('is not typing')
+
+    })
+
 
 })
 
