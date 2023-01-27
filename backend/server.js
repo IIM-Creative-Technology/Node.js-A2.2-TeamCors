@@ -4,7 +4,9 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import * as http from "http";
 import userRoute from './routes/user.js'
-const app= express();
+import drawingRoute from "./routes/drawing.js";
+
+const app = express();
 const server = http.createServer(app);
 const port = 3000;
 
@@ -26,12 +28,17 @@ server.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 })
 app.use("/api/user", userRoute)
+app.use("/api/drawing", drawingRoute)
 io.on("connection", (socket) => {
     console.log(socket.id);
     socket.emit("hello", "world!");
-    socket.on("validate", (user) => {
-        console.log(`User ${user.id} validated`);
-        console.table(user.strokes);
+    socket.on("validateDrawing", (drawing) => {
+        fetch('http://localhost:3000/api/drawing', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(drawing)
+        })
     })
 })
-

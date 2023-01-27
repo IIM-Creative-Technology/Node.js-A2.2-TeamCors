@@ -48,9 +48,7 @@ undoButton.addEventListener('click', () => {
             context.fillRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
         } else {
             stroke.moves.forEach((move, index) => {
-                context.beginPath();
                 drawLine(stroke.strokeStyle, stroke.strokeWidth, move.xPosition, move.yPosition, index-1 in stroke.moves ? stroke.moves[index-1].xPosition : move.xPosition, index-1 in stroke.moves ? stroke.moves[index-1].yPosition : move.yPosition);
-                context.closePath();
             })
         }
     })
@@ -65,9 +63,7 @@ redoButton.addEventListener('click', () => {
                 context.fillRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
             } else {
                 historySave[i].moves.forEach((move, index) => {
-                    context.beginPath();
                     drawLine(historySave[i].strokeStyle, historySave[i].strokeWidth, move.xPosition, move.yPosition, index - 1 in historySave[i].moves ? historySave[i].moves[index - 1].xPosition : move.xPosition, index - 1 in historySave[i].moves ? historySave[i].moves[index - 1].yPosition : move.yPosition);
-                    context.closePath();
                 })
             }
         }
@@ -86,11 +82,12 @@ clearButton.addEventListener('click', () => {
 })
 
 validateButton.addEventListener('click', () => {
-    socket.emit("validate", {
-        id: 18,
-        name: 'John',
-        surname: 'Doe',
-        strokes: history
+    socket.emit("validateDrawing", {
+        instruction: "Un loup",
+        roomId: "qohd13lNDZ91",
+        round: 2,
+        username: 'JohnDoe',
+        strokes: history.slice()
     });
 })
 
@@ -116,10 +113,7 @@ canvas.addEventListener('mousemove', (event) => {
         let yPosition = event.clientY - canvas.offsetTop;
         previousX ??= xPosition;
         previousY ??= yPosition;
-        context.beginPath();
         drawLine(strokeStyle, strokeWidth, xPosition, yPosition, previousX, previousY);
-        context.closePath();
-        context.fillStyle = '#8ED6FF';
         context.fill();
         lastStroke.moves.push({
             xPosition: xPosition,
@@ -131,12 +125,14 @@ canvas.addEventListener('mousemove', (event) => {
 })
 
 function drawLine(strokeStyle, strokeWidth, xPosition, yPosition, previousX, previousY) {
+    context.beginPath();
     context.lineCap = "round";
     context.strokeStyle = strokeStyle;
     context.lineWidth = strokeWidth;
     context.moveTo(previousX, previousY);
     context.lineTo(xPosition, yPosition);
     context.stroke();
+    context.closePath();
 }
 
 function endStroke() {
