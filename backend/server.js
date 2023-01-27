@@ -29,5 +29,15 @@ app.use("/api/user", userRoute)
 io.on("connection", (socket) => {
     console.log(socket.id);
     socket.emit("hello", "world!");
+
+    socket.on('chat message', (data) => {
+        console.log('message : ' + data);
+        console.log(data);
+        io.emit('chat message', data);
+        /* + SEND THE MESSAGE TO THE DATABASE (MESSAGE TABLE WITH USER ID */
+    });
+
+
 })
+
 
