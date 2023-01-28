@@ -5,7 +5,6 @@ import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-console.log(process.env.JWT_SECRET);
 router.post('/login', async (req, res) => {
     const { username, password } = req.query
     const user = await User.findOne({ username }).lean()
