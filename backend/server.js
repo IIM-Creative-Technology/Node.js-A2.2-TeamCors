@@ -51,4 +51,13 @@ io.on("connection", (socket) => {
             .then(data => console.log(data));
         });
     })
+
+    socket.on('chat message', (data) => {
+        console.log('message : ' + data);
+        console.log(data);
+        io.emit('chat message', data);
+        /* + SEND THE MESSAGE TO THE DATABASE (MESSAGE TABLE WITH USER ID */
+    });
+
+
 })
