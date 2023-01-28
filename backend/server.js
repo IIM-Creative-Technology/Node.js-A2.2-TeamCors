@@ -1,24 +1,31 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import express from "express";
 import bodyParser from "body-parser";
-import User from "./models/user.js";
+import mongoose from "mongoose";
+import User from "../models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import * as http from "http";
-import cors from "cors";
 
 
 const JWT_SECRET = 'sdjkfh8923yhjdksbfma@#*(&@*!^#&@bhjb2qiuhesdbhjdsfg839ujkdhfjk'
+
+mongoose.connect('mongodb://localhost:27017/login-app-db', {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+	useCreateIndex: true
+})
 
 const app = express()
 const server = http.createServer(app);
 const port = 3000;
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(cors());
+
 
 app.post('/api/login', async (req, res) => {
-	const { username, password } = req.query
+	const { username, password } = req.body
 	const user = await User.findOne({ username }).lean()
 
 	if (!user) {
@@ -42,7 +49,7 @@ app.post('/api/login', async (req, res) => {
 })
 
 app.post('/api/register', async (req, res) => {
-	const { username, password: plainTextPassword } = req.query
+	const { username, password: plainTextPassword } = req.body
 
 	if (!username || typeof username !== 'string') {
 		return res.json({ status: 'error', error: 'Invalid username' })
