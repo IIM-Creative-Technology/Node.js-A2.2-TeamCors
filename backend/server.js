@@ -1,30 +1,24 @@
 import express from "express";
-import path from "path";
 import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import User from "../models/user";
+import User from "./models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import * as http from "http";
+import cors from "cors";
 
 
 const JWT_SECRET = 'sdjkfh8923yhjdksbfma@#*(&@*!^#&@bhjb2qiuhesdbhjdsfg839ujkdhfjk'
-
-mongoose.connect('mongodb://localhost:27017/login-app-db', {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-	useCreateIndex: true
-})
 
 const app = express()
 const server = http.createServer(app);
 const port = 3000;
 
-app.use('/', express.static(path.join(__dirname, 'static')))
 app.use(bodyParser.json())
-
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors());
 
 app.post('/api/login', async (req, res) => {
-	const { username, password } = req.body
+	const { username, password } = req.query
 	const user = await User.findOne({ username }).lean()
 
 	if (!user) {
@@ -48,7 +42,7 @@ app.post('/api/login', async (req, res) => {
 })
 
 app.post('/api/register', async (req, res) => {
-	const { username, password: plainTextPassword } = req.body
+	const { username, password: plainTextPassword } = req.query
 
 	if (!username || typeof username !== 'string') {
 		return res.json({ status: 'error', error: 'Invalid username' })
