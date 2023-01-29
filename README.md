@@ -4,6 +4,12 @@
 
 TThis website allows users to join rooms and communicate with others through drawing on a shared canvas. The website is built using Express.js, Socket.io, and a MongoDB database.
 
+## Quick Guide
+- Login or create an account
+- After logging in, a new room will automatically be created for you.
+- Share the room URL with friends: To invite others to collaborate with you, simply send them the room URL. They can join the room by clicking the link.
+Note: Make sure your friends have also created an account or logged in before they can join your room.
+
 ## Team
 - [@lucaschrng](https://github.com/lucaschrng)
 - [@RyukiAkatsuki](https://github.com/RyukiAkatsuki)
