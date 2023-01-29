@@ -1,37 +1,65 @@
 import express from "express";
 import Room from "../models/room.js";
+import {Server} from "socket.io";
+import http from "http";
+const app = express();
 const router = express.Router();
 
 
-router.get("/:id", (req,res) => {
-    res.json({
-        name: "les copains" ,
-        maxPeople : 4,
-        id :req.params.id
+
+
+router.use(express.static("path/to/lobby.html"));
+
+//app.use("/room", express.static("path/to/lobby.html"));
+
+
+    router.get("/:id", async (req, res) => {
+        const {id} = req.params;
+        try {
+            const room = await Room.findById(id);
+            console.log(room)
+            console.log(id)
+
+            if (!room) {
+                return res.status(404).json({error: "Room not found"});
+            }
+            // Add the user to the room
+            const link = `/room/${room._id}`;
+            res.json({link});
+
+            //socket.join(room._id)
+
+
+        } catch (error) {
+            res.status(500).json({error});
+        }
+        //socket.join(id);
+
+    });
+
+    router.post("/create", async (req, res) => {
+        const {name} = req.body;
+
+        try {
+            const room = await Room.create({name});
+            const link = `/room/${room._id}`;
+
+            res.json({link});
+
+
+
+        } catch (error) {
+            res.status(500).json({error});
+        }
+
+        //socket.join(name);
+
     })
 
-});
-
-router.post("/create", async (req,res) => {
-    const { name } = req.body;
-    try {
-        // Create a new room in the database
-        const room = await Room.create({ name });
-        // Generate a link to join the room
-        const link = `/rooms/${room._id}`;
-        // Send the link to the client
-        res.json({ link });
-
-        //socket.emit("newRoom", { link });
+    router.delete("/room/:id", (req, res) => {
+        res.send('Delete a room')
+    })
 
 
-    } catch (error) {
-        res.status(500).json({ error });
-    }
-})
-
-router.delete("/room/:id", (req,res) => {
-    res.send('Delete a room')
-})
 
 export default router;

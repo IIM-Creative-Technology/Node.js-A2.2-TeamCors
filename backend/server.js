@@ -5,9 +5,17 @@ import cors from "cors";
 import * as http from "http";
 import userRoute from './routes/user.js'
 import roomRoute from './routes/room.js'
+import mongoose from "mongoose";
 const app= express();
 const server = http.createServer(app);
 const port = 3000;
+
+
+const mongoose = require('mongoose');
+
+// Connect to MongoDB
+
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -23,13 +31,46 @@ const io = new Server(server, {
     }
 })
 
+
 server.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 })
-app.use("/api/user", userRoute);
-app.use("/api/room", roomRoute);
+
 io.on("connection", (socket) => {
-    console.log(socket.id);
-    socket.emit("hello", "world!");
+    console.log(`User connected: ${socket.id}`);
+    socket.emit("set username", socket.id);
+
+    app.use("/api/user", userRoute);
+    app.use("/api/room", roomRoute);
+
+
+
+    socket.on('join room',(data)=>{
+        socket.join(data.roomIde)
+        console.log(data.roomIde)
+       // SEND TO MONGODB
+        socket.to(data.roomIde).emit("user entered", data.members);
+
+    })
+
+    socket.on('chat message', (data) => {
+        console.log('message : ' + data);
+        console.log(data);
+        io.emit('chat message', data);
+        /* + SEND THE MESSAGE TO THE DATABASE (MESSAGE TABLE WITH USER ID */
+    });
+
+    socket.on('is typing',()=>{
+        console.log('user is typing')
+        socket.broadcast.emit('is typing')
+
+    })
+
+    socket.on('is not typing',()=>{
+
+        socket.broadcast.emit('is not typing')
+
+    })
+
 })
 

@@ -8,10 +8,33 @@
 </head>
 <body>
   <h1 class="text-center">Wainting for Player ...</h1>
-  <div id="player" class="bg-[#232323] p-6 flex flex-row gap-5 align-center justify-center">
-    <div class="bg-violet-500 rounded-full w-20 h-20 flex justify-center items-center"><p class="text-white font-bold text-center">Fanny</p></div>
+  <ul id="user-list" class="bg-[#232323] p-6 flex flex-row gap-5 align-center justify-center">
+    <li class="bg-violet-500 rounded-full w-20 h-20 flex justify-center items-center" id="username"><p class="text-white font-bold text-center">Fanny</p></li>
+  </ul>
+
+  <div id="chat-app" class="p-4 bg-[#232323]">
+      <h1 class="text-center text-lg text-white mb-4">Chat App</h1>
+      <div id="chatSection" >
+          <div class="bg-[#1c1c1c] h-fit p-4  shadow-inner m-4 text-white list-none ">
+              <ul class="chat-window">
+
+              </ul>
+
+          </div>
+          <span class="status"></span>
+          <form class="bg-[#1c1c1c] text-white flex p-4 flex-col items-center justify-center gap-10 m-4 " id="form" >
+              <label class="chat-label">
+                  Type your message:
+                  <input type="text" class="chat-input text-black" id="input"/>
+              </label>
+              <input type="submit" class="p-4 rounded-xl bg-violet-800" value="enter" />
+          </form>
+      </div>
   </div>
 
   <button class="bg-violet-500 p-4 rounded-3xl shadow-xl text-white flex font-bold m-center">Start Game</button>
+
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <script src="js/index.js"></script>
 </body>
 </html>
