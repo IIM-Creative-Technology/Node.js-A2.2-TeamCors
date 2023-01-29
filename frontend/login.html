@@ -32,7 +32,7 @@
 					localStorage.setItem('token', result.data)
                     localStorage.setItem('username', document.getElementById('username').value);
                     if (findGetParameter('roomId') === null) {
-                        window.location.href = window.location.origin + `/rendu/frontend/drawing.html?roomId=${Math.floor(Math.random() * 100)}`
+                        window.location.href = window.location.origin + `/rendu/frontend/drawing.html?roomId=${Math.floor(Math.random() * 10000000000)}`
                     } else {
                         window.location.href = window.location.origin + `/rendu/frontend/drawing.html?roomId=${findGetParameter('roomId')}`
                     }

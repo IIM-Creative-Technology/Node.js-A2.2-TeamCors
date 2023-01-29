@@ -29,6 +29,10 @@ if (!localStorage.getItem('token')) {
     window.location.href = window.origin + "/rendu/frontend/login.html?roomId=" + findGetParameter('roomId');
 }
 
+if (findGetParameter('roomId') === null) {
+    window.location.href = window.origin + "/rendu/frontend/drawing.html?roomId=" + Math.floor(Math.random() * 10000000000);
+}
+
 colorInputs.forEach((colorInput, index) => {
     colorInput.addEventListener('click', () => {
         colorPickerLabel.classList.remove('text-white/80', 'text-black/30');
