@@ -22,24 +22,17 @@
 				const username = document.getElementById('username').value
 				const password = document.getElementById('password').value
 
-				const result = await fetch('/api/login', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({
-						username,
-						password
-					})
+				const result = await fetch(`http://localhost:3000/api/user/login?username=${username}&password=${password}`, {
+					method: 'POST'
 				}).then((res) => res.json())
 
 				if (result.status === 'ok') {
 					// everythign went fine
 					console.log('Got the token: ', result.data)
 					localStorage.setItem('token', result.data)
-					alert('Success')
+					console.log('Success')
 				} else {
-					alert(result.error)
+                    console.log(result.error)
 				}
 			}
 		</script>
