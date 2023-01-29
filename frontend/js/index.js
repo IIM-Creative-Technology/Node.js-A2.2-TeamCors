@@ -41,9 +41,7 @@ socket.on("set username",(data)=>{
     console.log(data)
     localStorage.setItem("username", data);
 })
-socket.on("show user", (data) => {
 
-});
 
 socket.on("hello", (arg) => {
     console.log(arg);
