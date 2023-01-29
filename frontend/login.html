@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Login</title>
+	</head>
+	<body>
+		<h1>Login</h1>
+		<form id="login">
+			<input type="text" autocomplete="off" id="username" placeholder="Username" />
+			<input type="password" autocomplete="off" id="password" placeholder="Password" />
+			<input type="submit" value="Submit Form" />
+		</form>
+
+		<script>
+			const form = document.getElementById('login')
+			form.addEventListener('submit', login)
+
+			async function login(event) {
+				event.preventDefault()
+				const username = document.getElementById('username').value
+				const password = document.getElementById('password').value
+
+				const result = await fetch(`http://localhost:3000/api/user/login?username=${username}&password=${password}`, {
+					method: 'POST'
+				}).then((res) => res.json())
+
+				if (result.status === 'ok') {
+					// everythign went fine
+					console.log('Got the token: ', result.data)
+					localStorage.setItem('token', result.data)
+                    localStorage.setItem('username', document.getElementById('username').value);
+                    if (findGetParameter('roomId') === null) {
+                        window.location.href = window.location.origin + `/rendu/frontend/drawing.html?roomId=${Math.floor(Math.random() * 10000000000)}`
+                    } else {
+                        window.location.href = window.location.origin + `/rendu/frontend/drawing.html?roomId=${findGetParameter('roomId')}`
+                    }
+				} else {
+                    console.log(result.error)
+				}
+			}
+            function findGetParameter(parameterName) {
+                let result = null,
+                    tmp = [];
+                location.search
+                    .substr(1)
+                    .split("&")
+                    .forEach(function (item) {
+                        tmp = item.split("=");
+                        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+                    });
+                return result;
+            }
+		</script>
+	</body>
+</html>
