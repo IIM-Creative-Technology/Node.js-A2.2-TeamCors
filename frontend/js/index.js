@@ -8,12 +8,12 @@ if ( document.URL.includes("lobby.html") ) {
 
     const roomIde = document.URL.split('/')[5];
     socket.emit("join room",{roomIde:roomIde,members:members})
-    console.log(roomIde)
+
     members.push(username)
-    console.log(members)
+
     const roomId =localStorage.getItem("roomId");
     document.querySelector("#username").innerHTML = username;
-    console.log(username,roomId)
+
    // socket.emit("user entered", { username ,roomIde});
 
     socket.on("user entered", (data) => {
@@ -96,7 +96,6 @@ joinForm.addEventListener('submit',async (e)=>{
         const { link } = await response.json();
         console.log(link);
         console.log(roomId)
-        localStorage.setItem("username", "John Doe");
         localStorage.setItem("roomId", roomId);
         socket.emit("new user")
         // Redirect the user to the room link
@@ -112,11 +111,11 @@ let form = document.getElementById('form');
 let input = document.getElementById('input');
 let convo = document.querySelector(".chat-window")
 
-form.addEventListener('submit', async function(e) {
+/*form.addEventListener('submit', function(e) {
     e.preventDefault();
     if (input.value) {
         console.log(name)
-        const response = await fetch('http://localhost:3000/api/message/', {
+        const response =  fetch('http://localhost:3000/api/message/create', {
             method: 'POST',
             body: JSON.stringify({ message: input.value }),
             headers: { 'Content-Type': 'application/json' }
@@ -128,7 +127,7 @@ form.addEventListener('submit', async function(e) {
         }
         input.value = '';
     }
-});
+});*/
 
 
 

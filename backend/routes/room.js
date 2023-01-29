@@ -60,6 +60,20 @@ router.use(express.static("path/to/lobby.html"));
         res.send('Delete a room')
     })
 
+router.put("/:id",(req,res)=>{
+    Room.findByIdAndUpdate({
+        roomId : req.query.roomId
+    },
+    {
+        $set: {'members': req.query.member}
+    },{
+    new:true
+    },(error, drawing) => {
+        if (error) return error;
+        res.json({ msg: "Drawing updated successfully" });
+    })
+})
+
 
 
 export default router;

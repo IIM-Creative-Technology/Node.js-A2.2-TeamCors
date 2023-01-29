@@ -1,5 +1,6 @@
 import express from "express";
 import Room from "../models/room.js";
+import Message from "../models/message.js";
 const router = express.Router();
 
 
@@ -13,16 +14,15 @@ router.get("/:id", (req,res) => {
 })
 
 
-router.post("/", (req,res) => {
-    const {content} = req.body;
-
+router.post("/create",    async(req,res) => {
+    /*const { content } = req.body;
     try {
-        const content = await Room.create({content});
+        const content = await Message.create({ content });
         res.json({content});
 
     } catch (error) {
         res.status(500).json({error});
-    }
+    }*/
 
 })
 
