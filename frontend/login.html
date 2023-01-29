@@ -32,9 +32,9 @@
 					localStorage.setItem('token', result.data)
                     localStorage.setItem('username', document.getElementById('username').value);
                     if (findGetParameter('roomId') === null) {
-                        window.location.href = window.location.origin + `/rendu/frontend/lobby.html?roomId=${Math.floor(Math.random() * 100)}`
+                        window.location.href = window.location.origin + `/rendu/frontend/drawing.html?roomId=${Math.floor(Math.random() * 100)}`
                     } else {
-                        window.location.href = window.location.origin + `/rendu/frontend/lobby.html?roomId=${findGetParameter('roomId')}`
+                        window.location.href = window.location.origin + `/rendu/frontend/drawing.html?roomId=${findGetParameter('roomId')}`
                     }
 				} else {
                     console.log(result.error)
