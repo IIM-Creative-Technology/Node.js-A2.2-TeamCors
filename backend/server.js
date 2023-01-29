@@ -10,7 +10,10 @@ const app= express();
 const server = http.createServer(app);
 const port = 3000;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 95cd2685545e0ff9ef31e56d2f99109cf59b7459
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
