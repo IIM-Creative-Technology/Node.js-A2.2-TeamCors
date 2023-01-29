@@ -96,6 +96,11 @@ canvas.addEventListener('mousedown', () => {
     if (strokeWidth === "fill") {
         context.fillStyle = strokeStyle;
         context.fillRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
+        socket.emit('line', JSON.stringify({
+            "roomId": findGetParameter("roomId"),
+            strokeStyle,
+            strokeWidth
+        }))
     }
     lastStroke = {
         strokeStyle:  strokeStyle,
@@ -113,6 +118,15 @@ canvas.addEventListener('mousemove', (event) => {
         let yPosition = event.clientY - canvas.offsetTop;
         previousX ??= xPosition;
         previousY ??= yPosition;
+        socket.emit('line', JSON.stringify({
+            "roomId": findGetParameter("roomId"),
+            strokeStyle,
+            strokeWidth,
+            xPosition,
+            yPosition,
+            previousX,
+            previousY
+        }))
         drawLine(strokeStyle, strokeWidth, xPosition, yPosition, previousX, previousY);
         context.fill();
         lastStroke.moves.push({
@@ -162,4 +176,29 @@ function updateColor() {
     colorInputs.forEach(colorInput => {
         colorInput.checked = false;
     })
+}
+
+socket.on('line', (arg) => {
+    arg = JSON.parse(arg);
+    if (arg.roomId == findGetParameter("roomId")) {
+        if (arg.strokeWidth === "fill") {
+            context.fillStyle = arg.strokeStyle;
+            context.fillRect(0, 0, canvas.getBoundingClientRect().width, canvas.getBoundingClientRect().height);
+        } else {
+            drawLine(arg.strokeStyle, arg.strokeWidth, arg.xPosition, arg.yPosition, arg.previousX, arg.previousY);
+        }
+    }
+})
+
+function findGetParameter(parameterName) {
+    let result = null,
+        tmp = [];
+    location.search
+        .substr(1)
+        .split("&")
+        .forEach(function (item) {
+            tmp = item.split("=");
+            if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+        });
+    return result;
 }

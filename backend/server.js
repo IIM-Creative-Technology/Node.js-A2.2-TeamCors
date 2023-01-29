@@ -135,5 +135,9 @@ io.on("connection", (socket) => {
     socket.on('start', (arg) => {
         io.emit('start', arg)
     })
+
+    socket.on('line', (arg) => {
+        io.emit('line', arg)
+    })
 })
 
