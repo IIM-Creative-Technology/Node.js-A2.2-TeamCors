@@ -5,8 +5,8 @@ dotenv.config();
 mongoose.connect(`mongodb://${process.env.DATABASE_HOST}/${process.env.DATABASE_NAME}`)
 
 const RoomSchema = new mongoose.Schema({
-    name: {
-        type: String,
+    id: {
+        type: Number,
         required: true
     },
     createdAt: {
@@ -17,10 +17,9 @@ const RoomSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    members: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
-    }]
+    members: {
+        type: Array,
+    }
 });
 
 const Room = mongoose.model("Room", RoomSchema);

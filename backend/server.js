@@ -8,7 +8,6 @@ import drawingRoute from "./routes/drawing.js";
 import roomRoute from './routes/room.js'
 
 const app = express();
-const app= express();
 const server = http.createServer(app);
 const port = 3000;
 
@@ -72,6 +71,44 @@ io.on("connection", (socket) => {
         /* + SEND THE MESSAGE TO THE DATABASE (MESSAGE TABLE WITH USER ID */
     });
 
+    socket.on('lobbyJoin', (data) => {
+        console.log(data);
+        let roomId = data.roomId
+        let username = data.username
+        fetch(`http://localhost:3000/api/room/${roomId}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    fetch(`http://localhost:3000/api/room/create`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id: roomId
+                        })
+                    }).then(res => {
+                        return res.json()
+                    })
+                        .then(data => {
+                            console.log("slay", data);
+                        })
+                }
 
+                fetch(`http://localhost:3000/api/room/`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: roomId,
+                        username: username
+                    })
+                }).then(res => res.json())
+                    .then(data => {
+                        console.log('data is', data);
+                    })
+            })
+    })
 })
 
