@@ -1,7 +1,8 @@
 ﻿# Node.js-A2.2-TeamCors
  
 ## Project Description
-This project is a clone of the game Gartic Phone. 
+
+TThis website allows users to join rooms and communicate with others through drawing on a shared canvas. The website is built using Express.js, Socket.io, and a MongoDB database.
 
 ## Team
 - [@lucaschrng](https://github.com/lucaschrng)
