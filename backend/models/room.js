@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
-mongoose.connect('mongodb://localhost:27017/gartic-phone')
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+mongoose.connect(`mongodb://${process.env.DATABASE_HOST}/${process.env.DATABASE_NAME}`)
 
 const RoomSchema = new mongoose.Schema({
     name: {

@@ -10,13 +10,6 @@ const app= express();
 const server = http.createServer(app);
 const port = 3000;
 
-
-const mongoose = require('mongoose');
-
-// Connect to MongoDB
-
-
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
