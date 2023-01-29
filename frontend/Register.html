@@ -4,13 +4,14 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
+		<link rel="stylesheet" href="css/style.css">
 	</head>
 	<body>
-		<h1>Registration</h1>
-		<form id="reg-form">
-			<input type="text" autocomplete="off" id="username" placeholder="Username" />
-			<input type="password" autocomplete="off" id="password" placeholder="Password" />
-			<input type="submit" value="Submit Form" />
+		<h1 class="text-center text-2xl m-4 ">Registration</h1>
+		<form id="reg-form" class="flex flex-col  shadow-xl  justify-center items-center p-4 gap-2 m-4">
+			<input type="text" autocomplete="off" id="username" placeholder="Username" class="border border-black p-1 rounded-md"/>
+			<input type="password" autocomplete="off" id="password" placeholder="Password" class="border border-black p-1 rounded-md"/>
+			<input type="submit" value="Submit Form" class="bg-violet-500 p-2 text-white rounded-full" />
 		</form>
 
 		<script>
@@ -29,6 +30,7 @@
 				if (result.status === 'ok') {
 					// everythign went fine
 					alert('Success')
+					window.location.href="login.html"
 				} else {
 					alert(result.error)
 				}
