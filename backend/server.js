@@ -31,7 +31,7 @@ server.listen(port, () => {
 
 io.on("connection", (socket) => {
     console.log(socket.id);
-    socket.emit("hello", "world!");
+
     socket.on("validateDrawing", (doc) => {
         fetch(`http://localhost:3000/api/drawing?roomId=${doc.roomId}&round=${doc.round}&username=${doc.username}`)
         .then(response => response.json())
@@ -48,4 +48,14 @@ io.on("connection", (socket) => {
             .then(data => console.log(data));
         });
     })
+
+    socket.on('chat message', (data) => {
+        console.log('message : ' + data);
+        console.log(data);
+        io.emit('chat message', data);
+        /* + SEND THE MESSAGE TO THE DATABASE (MESSAGE TABLE WITH USER ID */
+    });
+
+
 })
+
