@@ -8,7 +8,7 @@
 </head>
 <body>
   <h1 class="text-center">Wainting for Player ...</h1>
-  <ul id="user-list" class="bg-[#232323] p-6 flex flex-row gap-5 align-center justify-center">
+  <ul id="user-list" class="bg-[#232323] p-6 flex flex-row gap-5 align-center justify-center text-white">
   </ul>
 
 
@@ -27,7 +27,6 @@
               username: localStorage.getItem('username')
           });
 
-
       } else {
           window.location.href = window.location.origin + '/rendu/frontend/login.html?roomId=' + (findGetParameter('roomId') === null ? '':findGetParameter('roomId'))
       }
@@ -44,6 +43,15 @@
           return result;
       }
 
+      socket.on("newMember", arg => {
+          console.log(JSON.parse(arg))
+          membersList.innerHTML = '';
+          JSON.parse(arg).members.forEach(member => {
+              let li = document.createElement('li');
+              li.textContent = member;
+              membersList.appendChild(li);
+          })
+      })
   </script>
 </body>
 </html>

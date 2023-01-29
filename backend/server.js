@@ -91,23 +91,44 @@ io.on("connection", (socket) => {
                         return res.json()
                     })
                         .then(data => {
-                            console.log("slay", data);
+                            fetch(`http://localhost:3000/api/room/`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    id: roomId,
+                                    username: username
+                                })
+                            }).then(res => res.json())
+                                .then(data => {
+                                    console.log('data is', data);
+                                })
+                        })
+                } else if (!data.members.includes(username)) {
+                    fetch(`http://localhost:3000/api/room/`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id: roomId,
+                            username: username
+                        })
+                    }).then(res => res.json())
+                        .then(data => {
+                            console.log('data is', data);
                         })
                 }
-
-                fetch(`http://localhost:3000/api/room/`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        id: roomId,
-                        username: username
-                    })
-                }).then(res => res.json())
+                fetch(`http://localhost:3000/api/room/${roomId}`)
+                    .then(res => res.json())
                     .then(data => {
-                        console.log('data is', data);
+
+                        io.emit('newMember', JSON.stringify({
+                            members: data.members
+                        }))
                     })
+                console.log(data)
             })
     })
 })

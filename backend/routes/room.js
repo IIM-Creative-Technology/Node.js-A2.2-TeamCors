@@ -25,8 +25,7 @@ router.use(express.static("path/to/lobby.html"));
                 return res.status(404).json({error: "Room not found"});
             }
             // Add the user to the room
-            const link = `/room/${room._id}`;
-            res.json({link});
+            res.json({members: room.members});
 
             //socket.join(room._id)
 
