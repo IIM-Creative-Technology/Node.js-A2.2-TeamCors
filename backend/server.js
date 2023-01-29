@@ -6,7 +6,6 @@ import * as http from "http";
 import userRoute from './routes/user.js'
 import drawingRoute from "./routes/drawing.js";
 import roomRoute from './routes/room.js'
-import mongoose from "mongoose";
 
 const app = express();
 const app= express();
@@ -20,7 +19,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
 app.use("/api/user", userRoute);
-app.use("/api/drawing", drawingRoute)
+app.use("/api/drawing", drawingRoute);
+app.use("/api/user", userRoute);
 
 app.get('/', (req, res) => {
     res.json({hello: "world!"});
@@ -35,7 +35,6 @@ const io = new Server(server, {
 server.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 })
-app.use("/api/user", userRoute)
 io.on("connection", (socket) => {
     console.log(`User connected: ${socket.id}`);
     socket.emit("set username", socket.id);
