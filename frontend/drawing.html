@@ -100,11 +100,39 @@
 <div class="w-fit">
     <canvas class="border-2" height="720" width="1080"></canvas>
 </div>
+<div id="chat" class="bg-[#232323] text-white p-4 flex flex-col justify-center items-center">
+    <div id="chat-window"></div>
+    <form action="" id="sendChat">
+        <input type="text" id="chat-message" class="text-black">
+        <input type="submit" value="send">
+    </form>
+
+</div>
+
 
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <script src="http://localhost:3000/socket.io/socket.io.js"></script>
 <script src="./js/drawing.js"></script>
+<script>
 
+    let form = document.getElementById('sendChat');
+    let input = document.getElementById('chat-message');
+    let convo = document.querySelector("#chat-window");
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (input.value) {
+            socket.emit('chat message', {message:input.value,room:socket.room});
+            input.value=""
+        }
+    });
+    socket.on('chat message', function(msg) {
+        let item = document.createElement('li');
+        console.log(msg)
+        item.textContent+= msg.message
+        convo.appendChild(item);
+
+    });
+</script>
 </body>
 </html>

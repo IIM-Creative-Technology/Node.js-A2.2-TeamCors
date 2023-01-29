@@ -50,7 +50,7 @@ socket.on("hello", (arg) => {
 
 
 
-let form = document.getElementById('form');
+/*let form = document.getElementById('form');
 let input = document.getElementById('input');
 let convo = document.querySelector(".chat-window")
 
@@ -74,7 +74,7 @@ socket.on("chat message",function(msg){
     convo.appendChild(item);
 })
 
-
+*/
 
 let forme = document.querySelector("#create-room-form")
 let joinForm = document.querySelector("#join-form")

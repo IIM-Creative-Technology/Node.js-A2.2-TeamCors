@@ -67,7 +67,7 @@ io.on("connection", (socket) => {
     socket.on('chat message', (data) => {
         console.log('message : ' + data);
         console.log(data);
-        io.emit('chat message', data);
+        io.to(data.room).emit('chat message', data.message);
         /* + SEND THE MESSAGE TO THE DATABASE (MESSAGE TABLE WITH USER ID */
     });
 
