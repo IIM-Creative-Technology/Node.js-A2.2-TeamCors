@@ -52,6 +52,18 @@
               membersList.appendChild(li);
           })
       })
+
+      document.querySelector('button').addEventListener('click', () => {
+          socket.emit('start', findGetParameter('roomId'))
+          console.log('sendstart')
+      })
+
+      socket.on('start', (arg) => {
+          console.log('receivestart')
+          if (arg == findGetParameter('roomId')) {
+              window.location.href = window.origin + "/rendu/frontend/drawing.html?roomId=" + arg;
+          }
+      })
   </script>
 </body>
 </html>

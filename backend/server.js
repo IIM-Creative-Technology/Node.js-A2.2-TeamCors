@@ -131,5 +131,9 @@ io.on("connection", (socket) => {
                 console.log(data)
             })
     })
+
+    socket.on('start', (arg) => {
+        io.emit('start', arg)
+    })
 })
 
